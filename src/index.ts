@@ -1,3 +1,4 @@
+import './lib/patches';
 import { Pythagoras } from './pythagoras/pythagoras';
 import { RandomApiClient } from './lib/random-api-client';
 
@@ -30,7 +31,6 @@ class CounterComponent {
   async setRandom() {
     try {
       this.counter = await this.api.getRandomNumber(1, 100);
-      Pythagoras.triggerDigest();
     } catch (error) {
       console.warn(error);
     }
