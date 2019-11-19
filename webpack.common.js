@@ -24,7 +24,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'NG Zone Demo',
       template: './src/index.html',
-      inject: 'head', // since <body> has ng-view on it, we need the script tags outside of its context
     }),
   ],
 };
