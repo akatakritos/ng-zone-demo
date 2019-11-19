@@ -11,6 +11,7 @@ export class Pythagoras {
     root.innerHTML = template;
 
     this.parseTemplate();
+    this.digest();
   }
 
   private parseTemplate() {
@@ -52,6 +53,15 @@ export class Pythagoras {
   private handleClick(event: MouseEvent, callback: string) {
     if (this.component[callback]) {
       this.component[callback](event);
+    }
+  }
+
+  /**
+   * Sync component state to DOM
+   */
+  private digest() {
+    for (const binding of this.bindings) {
+      binding.node.nodeValue = this.component[binding.property];
     }
   }
 }
