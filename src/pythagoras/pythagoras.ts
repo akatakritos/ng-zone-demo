@@ -1,3 +1,5 @@
+import { Subject } from 'rxjs';
+
 interface ElementBinding {
   node: Node;
   property: string;
@@ -12,6 +14,8 @@ export class Pythagoras {
 
     this.parseTemplate();
     this.digest();
+
+    Pythagoras.globalDigestRequests.subscribe(() => this.digest());
   }
 
   private parseTemplate() {
@@ -65,5 +69,10 @@ export class Pythagoras {
     for (const binding of this.bindings) {
       binding.node.nodeValue = this.component[binding.property];
     }
+  }
+
+  static globalDigestRequests = new Subject<void>();
+  static triggerDigest() {
+    Pythagoras.globalDigestRequests.next();
   }
 }

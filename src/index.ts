@@ -30,6 +30,7 @@ class CounterComponent {
   async setRandom() {
     try {
       this.counter = await this.api.getRandomNumber(1, 100);
+      Pythagoras.triggerDigest();
     } catch (error) {
       console.warn(error);
     }
