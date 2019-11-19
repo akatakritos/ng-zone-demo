@@ -53,6 +53,8 @@ export class Pythagoras {
   private handleClick(event: MouseEvent, callback: string) {
     if (this.component[callback]) {
       this.component[callback](event);
+
+      this.digest();
     }
   }
 
