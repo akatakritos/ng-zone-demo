@@ -1,13 +1,19 @@
 import { Pythagoras } from './pythagoras/pythagoras';
-
-console.log('hello world');
+import { RandomApiClient } from './lib/random-api-client';
 
 class CounterComponent {
+  api: RandomApiClient;
+
+  constructor() {
+    this.api = new RandomApiClient();
+  }
+
   static template = `
     <div>
       <h1>{{ counter }}</h1>
       <button (click)="increment">+</button>
       <button (click)="decrement">-</button>
+      <button (click)="setRandom">random</button>
     </div>
   `;
 
@@ -19,6 +25,14 @@ class CounterComponent {
 
   decrement() {
     this.counter--;
+  }
+
+  async setRandom() {
+    try {
+      this.counter = await this.api.getRandomNumber(1, 100);
+    } catch (error) {
+      console.warn(error);
+    }
   }
 }
 
