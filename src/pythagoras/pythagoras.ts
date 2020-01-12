@@ -75,4 +75,30 @@ export class Pythagoras {
   static triggerDigest() {
     Pythagoras.globalDigestRequests.next();
   }
+
+  static http(url: string): Promise<string> {
+    return new Promise(function(resolve, reject) {
+      const request = new XMLHttpRequest();
+      request.open('GET', url, true);
+
+      request.addEventListener('load', function() {
+        if (this.status === 200) {
+          const body = this.response;
+          console.log('http', body);
+          Pythagoras.apply(() => resolve(body));
+        }
+      });
+
+      request.addEventListener('error', reject);
+
+      request.send();
+    });
+  }
+
+  static apply(fn: Function) {
+    fn();
+    setTimeout(() => {
+      Pythagoras.triggerDigest();
+    }, 0);
+  }
 }
