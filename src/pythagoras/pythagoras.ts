@@ -1,4 +1,5 @@
 import { Subject } from 'rxjs';
+import { PythagoranZoneSpec } from './pythagoran-zone';
 
 interface ElementBinding {
   node: Node;
@@ -12,10 +13,12 @@ export class Pythagoras {
   constructor(private root: HTMLElement, template: string, private component: any) {
     root.innerHTML = template;
 
-    this.parseTemplate();
-    this.digest();
+    Zone.current.fork(new PythagoranZoneSpec()).run(() => {
+      this.parseTemplate();
+      this.digest();
 
-    Pythagoras.globalDigestRequests.subscribe(() => this.digest());
+      Pythagoras.globalDigestRequests.subscribe(() => this.digest());
+    });
   }
 
   private parseTemplate() {
@@ -57,8 +60,6 @@ export class Pythagoras {
   private handleClick(event: MouseEvent, callback: string) {
     if (this.component[callback]) {
       this.component[callback](event);
-
-      this.digest();
     }
   }
 

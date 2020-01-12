@@ -1,4 +1,4 @@
-import './lib/patches';
+import 'zone.js';
 import { Pythagoras } from './pythagoras/pythagoras';
 import { RandomApiClient } from './lib/random-api-client';
 
